@@ -19,17 +19,138 @@ function invalidAccess([x, y]) {
 
 // Based on a knight's moves on a chess board
 function findNeighbors([x, y], array) {
-  array.push([x - 2, y - 1]);
-  array.push([x - 2, y + 1]);
-  array.push([x + 2, y - 1]);
-  array.push([x + 2, y + 1]);
-  array.push([x - 1, y - 2]);
-  array.push([x - 1, y + 2]);
-  array.push([x + 1, y - 2]);
-  array.push([x + 1, y + 2]);
 
-  return array;
 }
 
 const board = createBoard();
 console.log(board);
+
+function upperNeighbors([x, y], array) {
+  array.push([x - 2, y + 1]);
+  array.push([x + 2, y + 1]);
+  array.push([x - 1, y + 2]);
+  array.push([x + 1, y + 2]);
+  return array;
+}
+
+function lowerNeighbors([x, y], array) {
+  array.push([x - 2, y - 1]);
+  array.push([x + 2, y - 1]);
+  array.push([x - 1, y - 2]);
+  array.push([x + 1, y - 2]);
+  return array;
+}
+
+function leftVertexNeighbors([x, y], array) {
+  array.push([x - 2, y + 1]);
+  array.push([x - 1, y + 2]);
+  array.push([x + 1, y + 2]);
+  array.push([x + 2, y + 1]);
+  return array;
+}
+
+function rightVertexNeighbors([x, y], array) {
+  array.push([x - 2, y - 1]);
+  array.push([x - 1, y - 2]);
+  array.push([x + 1, y - 2]);
+  array.push([x + 2, y - 1]);
+  return array;
+}
+
+function borderVertices([x, y], array) {
+  if (x === 0 && y === 0) {
+    array.push([x + 2, y + 1]);
+    array.push([x + 1, y + 2]);
+    return array;
+  }
+
+  if (x === 0 && y === 7) {
+    array.push([x - 2, y + 1]);
+    array.push([x - 1, y + 2]);
+    return array;
+  }
+
+  if (x === 7 && y === 0) {
+    array.push([x + 2, y - 1]);
+    array.push([x + 1, y - 2]);
+    return array;
+  }
+
+  if (x === 7 && y === 7) {
+    array.push([x - 2, y - 1]);
+    array.push([x - 1, y - 2]);
+    return array;
+  }
+
+  if (x === 1 && y === 0) {
+    array.push([x - 1, y + 2]);
+    array.push([x + 2, y + 1]);
+    array.push([x + 1, y + 2]);
+    return array;
+  }
+
+  if (x === 6 && y === 0) {
+    array.push([x + 1, y + 2]);
+    array.push([x - 1, y + 2]);
+    array.push([x - 2, y + 1]);
+    return array;
+  }
+
+  if (x === 7 && y === 1) {
+    array.push([x - 1, y + 2]);
+    array.push([x - 2, y + 1]);
+    array.push([x - 2, y - 1]);
+    return array;
+  }
+
+  if (x === 7 && y === 6) {
+    array.push([x - 1, y - 2]);
+    array.push([x - 2, y - 1]);
+    array.push([x - 2, y + 1]);
+    return array;
+  }
+
+  if (x === 1 && y === 0) {
+    array.push([x - 1, y + 2]);
+    array.push([x + 2, y + 1]);
+    array.push([x + 1, y + 2]);
+    return array;
+  }
+
+  if (x === 6 && y === 0) {
+    array.push([x + 1, y + 2]);
+    array.push([x + 2, y - 1]);
+    array.push([x - 2, y + 1]);
+    return array;
+  }
+
+  if (x === 1 && y === 7) {
+    array.push([x + 2, y - 1]);
+    array.push([x + 1, y - 2]);
+    array.push([x - 1, y - 2]);
+    return array;
+  }
+
+  if (x === 6 && y === 7) {
+    array.push([x + 1, y - 2]);
+    array.push([x - 1, y - 2]);
+    array.push([x - 2, y - 1]);
+    return array;
+  }
+
+  if (y > 1 && y < 6 && x === 0) {
+    return upperNeighbors();
+  }
+
+  if (y > 1 && y < 6 && x === 7) {
+    return lowerNeighbors();
+  }
+
+  if (x > 1 && x < 6 && y === 0) {
+    return leftVertexNeighbors();
+  }
+
+  if (x > 1 && x < 6 && y === 7) {
+    return rightVertexNeighbors();
+  }
+}
