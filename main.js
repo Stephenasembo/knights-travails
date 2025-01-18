@@ -17,6 +17,19 @@ function invalidAccess([x, y]) {
   }
 }
 
+// Based on a knight's moves on a chess board
+function findNeighbors([x, y], array) {
+  array.push([x - 2, y - 1]);
+  array.push([x - 2, y + 1]);
+  array.push([x + 2, y - 1]);
+  array.push([x + 2, y + 1]);
+  array.push([x - 1, y - 2]);
+  array.push([x - 1, y + 2]);
+  array.push([x + 1, y - 2]);
+  array.push([x + 1, y + 2]);
+
+  return array;
+}
+
 const board = createBoard();
 console.log(board);
-invalidAccess([-1, 0]);
