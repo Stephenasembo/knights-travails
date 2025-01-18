@@ -154,3 +154,15 @@ function borderVertices([x, y], array) {
     return rightVertexNeighbors();
   }
 }
+
+function maxMoves([x, y], array) {
+  array.push([x - 2, y - 1]);
+  array.push([x - 1, y - 2]);
+  array.push([x + 1, y - 2]);
+  array.push([x + 2, y - 1]);
+  array.push([x + 2, y + 1]);
+  array.push([x + 1, y + 2]);
+  array.push([x - 1, y + 2]);
+  array.push([x - 1, y + 1]);
+  return array;
+}
