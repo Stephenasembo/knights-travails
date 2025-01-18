@@ -11,5 +11,12 @@ function createBoard() {
   return array;
 }
 
+function invalidAccess([x, y]) {
+  if (x < 0 || x > 7 || y < 0 || y > 7) {
+    throw new Error('Trying to access area out of board');
+  }
+}
+
 const board = createBoard();
 console.log(board);
+invalidAccess([-1, 0]);
