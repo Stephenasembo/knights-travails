@@ -79,5 +79,11 @@ function createAdjacencyList() {
   return adjacencyList;
 }
 
+function getCoordinates(index) {
+  const row = Math.floor(index / 8);
+  const col = index % 8;
+  return [row, col];
+}
+
 const list = createAdjacencyList();
-console.log(list[0]);
+console.log(getCoordinates(60));
