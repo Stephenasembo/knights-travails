@@ -23,9 +23,9 @@ function findNeighbors([row, col], array) {
 }
 
 function upperNeighbors([row, col], array) {
-  array.push([row - 2, col + 1]);
+  array.push([row + 1, col - 2]);
+  array.push([row + 2, col - 1]);
   array.push([row + 2, col + 1]);
-  array.push([row - 1, col + 2]);
   array.push([row + 1, col + 2]);
   return array;
 }
@@ -150,7 +150,7 @@ function borderVertices([row, col], array) {
   }
 
   if (col > 1 && col < 6 && row === 0) {
-    return upperNeighbors();
+    return upperNeighbors([row, col], []);
   }
 
   if (col > 1 && col < 6 && row === 7) {
@@ -178,6 +178,6 @@ function maxMoves([row, col], array) {
   return array;
 }
 
-const test = [0, 6];
+const test = [0, 4];
 const neighbors = borderVertices(test, []);
 console.log(neighbors);
