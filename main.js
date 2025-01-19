@@ -31,10 +31,10 @@ function upperNeighbors([row, col], array) {
 }
 
 function lowerNeighbors([row, col], array) {
+  array.push([row - 1, col + 2]);
+  array.push([row - 2, col + 1]);
   array.push([row - 2, col - 1]);
-  array.push([row + 2, col - 1]);
   array.push([row - 1, col - 2]);
-  array.push([row + 1, col - 2]);
   return array;
 }
 
@@ -154,7 +154,7 @@ function borderVertices([row, col], array) {
   }
 
   if (col > 1 && col < 6 && row === 7) {
-    return lowerNeighbors();
+    return lowerNeighbors([row, col], []);
   }
 
   if (row > 1 && row < 6 && col === 0) {
@@ -178,6 +178,6 @@ function maxMoves([row, col], array) {
   return array;
 }
 
-const test = [0, 4];
+const test = [7, 4];
 const neighbors = borderVertices(test, []);
 console.log(neighbors);
