@@ -22,9 +22,6 @@ function findNeighbors([row, col], array) {
 
 }
 
-const board = createBoard();
-console.log(board);
-
 function upperNeighbors([row, col], array) {
   array.push([row - 2, col + 1]);
   array.push([row + 2, col + 1]);
@@ -65,14 +62,14 @@ function borderVertices([row, col], array) {
   }
 
   if (row === 0 && col === 7) {
-    array.push([row - 2, col + 1]);
-    array.push([row - 1, col + 2]);
+    array.push([row + 2, col - 1]);
+    array.push([row + 1, col - 2]);
     return array;
   }
 
   if (row === 7 && col === 0) {
-    array.push([row + 2, col - 1]);
-    array.push([row + 1, col - 2]);
+    array.push([row - 2, col + 1]);
+    array.push([row - 1, col + 2]);
     return array;
   }
 
@@ -138,6 +135,20 @@ function borderVertices([row, col], array) {
     return array;
   }
 
+  if (row === 0 && col === 1) {
+    array.push([row + 2, col - 1]);
+    array.push([row + 2, col + 1]);
+    array.push([row + 1, col + 2]);
+    return array;
+  }
+
+  if (row === 0 && col === 6) {
+    array.push([row + 2, col + 1]);
+    array.push([row + 2, col - 1]);
+    array.push([row + 1, col - 2]);
+    return array;
+  }
+
   if (col > 1 && col < 6 && row === 0) {
     return upperNeighbors();
   }
@@ -167,5 +178,6 @@ function maxMoves([row, col], array) {
   return array;
 }
 
-const neighbors = borderVertices([0, 7], []);
+const test = [0, 6];
+const neighbors = borderVertices(test, []);
 console.log(neighbors);
