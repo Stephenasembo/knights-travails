@@ -17,11 +17,7 @@ function invalidAccess([row, col]) {
   }
 }
 
-// Based on a knight's moves on a chess board
-function findNeighbors([row, col], array) {
-
-}
-
+// Rejects access outside the board
 function removeInvalid(coordinates, array) {
   const [row, col] = coordinates;
   if (row < 0 || row > 7 || col < 0 || col > 7) {
@@ -30,6 +26,7 @@ function removeInvalid(coordinates, array) {
   return array;
 }
 
+// Gets all possible paths of a knight at a particular square
 function knightMoves([row, col]) {
   let array = [];
   array.push([row - 2, col - 1]);
@@ -67,4 +64,20 @@ function knightMoves([row, col]) {
   return array;
 }
 
-console.log(knightMoves([4, 0]));
+function createAdjacencyList() {
+  const adjacencyList = [];
+  // Each square on the board is a vertex for our graph
+  // Each vertex contains a list of its adjacent vertices
+  for (let row = 0; row < 8; row += 1) {
+    for (let col = 0; col < 8; col += 1) {
+      const vertexNeighbors = [];
+      const neighbors = knightMoves([row, col]);
+      vertexNeighbors.push(neighbors);
+      adjacencyList.push(vertexNeighbors);
+    }
+  }
+  return adjacencyList;
+}
+
+const list = createAdjacencyList();
+console.log(list[0]);
