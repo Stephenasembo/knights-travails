@@ -158,26 +158,57 @@ function borderVertices([row, col], array) {
   }
 
   if (row > 1 && row < 6 && col === 0) {
-    return leftVertexNeighbors();
+    return leftVertexNeighbors([row, col], []);
   }
 
   if (row > 1 && row < 6 && col === 7) {
-    return rightVertexNeighbors();
+    return rightVertexNeighbors([row, col], []);
   }
 }
 
-function maxMoves([row, col], array) {
-  array.push([row - 2, col - 1]);
-  array.push([row - 1, col - 2]);
-  array.push([row + 1, col - 2]);
-  array.push([row + 2, col - 1]);
-  array.push([row + 2, col + 1]);
-  array.push([row + 1, col + 2]);
-  array.push([row - 1, col + 2]);
-  array.push([row - 1, col + 1]);
+function removeInvalid(coordinates, array) {
+  const [row, col] = coordinates;
+  if (row < 0 || row > 7 || col < 0 || col > 7) {
+    array.pop();
+  }
   return array;
 }
 
-const test = [7, 4];
-const neighbors = borderVertices(test, []);
-console.log(neighbors);
+function knightMoves([row, col]) {
+  let array = [];
+  array.push([row - 2, col - 1]);
+  let newCoordinates = array[array.length - 1];
+  array = removeInvalid(newCoordinates, array);
+
+  array.push([row - 1, col - 2]);
+  newCoordinates = array[array.length - 1];
+  array = removeInvalid(newCoordinates, array);
+
+  array.push([row + 1, col - 2]);
+  newCoordinates = array[array.length - 1];
+  array = removeInvalid(newCoordinates, array);
+
+  array.push([row + 2, col - 1]);
+  newCoordinates = array[array.length - 1];
+  array = removeInvalid(newCoordinates, array);
+
+  array.push([row + 2, col + 1]);
+  newCoordinates = array[array.length - 1];
+  array = removeInvalid(newCoordinates, array);
+
+  array.push([row + 1, col + 2]);
+  newCoordinates = array[array.length - 1];
+  array = removeInvalid(newCoordinates, array);
+
+  array.push([row - 1, col + 2]);
+  newCoordinates = array[array.length - 1];
+  array = removeInvalid(newCoordinates, array);
+
+  array.push([row - 2, col + 1]);
+  newCoordinates = array[array.length - 1];
+  array = removeInvalid(newCoordinates, array);
+
+  return array;
+}
+
+console.log(knightMoves([4, 0]));
