@@ -11,158 +11,161 @@ function createBoard() {
   return array;
 }
 
-function invalidAccess([x, y]) {
-  if (x < 0 || x > 7 || y < 0 || y > 7) {
+function invalidAccess([row, col]) {
+  if (row < 0 || row > 7 || col < 0 || col > 7) {
     throw new Error('Trying to access area out of board');
   }
 }
 
 // Based on a knight's moves on a chess board
-function findNeighbors([x, y], array) {
+function findNeighbors([row, col], array) {
 
 }
 
 const board = createBoard();
 console.log(board);
 
-function upperNeighbors([x, y], array) {
-  array.push([x - 2, y + 1]);
-  array.push([x + 2, y + 1]);
-  array.push([x - 1, y + 2]);
-  array.push([x + 1, y + 2]);
+function upperNeighbors([row, col], array) {
+  array.push([row - 2, col + 1]);
+  array.push([row + 2, col + 1]);
+  array.push([row - 1, col + 2]);
+  array.push([row + 1, col + 2]);
   return array;
 }
 
-function lowerNeighbors([x, y], array) {
-  array.push([x - 2, y - 1]);
-  array.push([x + 2, y - 1]);
-  array.push([x - 1, y - 2]);
-  array.push([x + 1, y - 2]);
+function lowerNeighbors([row, col], array) {
+  array.push([row - 2, col - 1]);
+  array.push([row + 2, col - 1]);
+  array.push([row - 1, col - 2]);
+  array.push([row + 1, col - 2]);
   return array;
 }
 
-function leftVertexNeighbors([x, y], array) {
-  array.push([x - 2, y + 1]);
-  array.push([x - 1, y + 2]);
-  array.push([x + 1, y + 2]);
-  array.push([x + 2, y + 1]);
+function leftVertexNeighbors([row, col], array) {
+  array.push([row - 2, col + 1]);
+  array.push([row - 1, col + 2]);
+  array.push([row + 1, col + 2]);
+  array.push([row + 2, col + 1]);
   return array;
 }
 
-function rightVertexNeighbors([x, y], array) {
-  array.push([x - 2, y - 1]);
-  array.push([x - 1, y - 2]);
-  array.push([x + 1, y - 2]);
-  array.push([x + 2, y - 1]);
+function rightVertexNeighbors([row, col], array) {
+  array.push([row - 2, col - 1]);
+  array.push([row - 1, col - 2]);
+  array.push([row + 1, col - 2]);
+  array.push([row + 2, col - 1]);
   return array;
 }
 
-function borderVertices([x, y], array) {
-  if (x === 0 && y === 0) {
-    array.push([x + 2, y + 1]);
-    array.push([x + 1, y + 2]);
+function borderVertices([row, col], array) {
+  if (row === 0 && col === 0) {
+    array.push([row + 2, col + 1]);
+    array.push([row + 1, col + 2]);
     return array;
   }
 
-  if (x === 0 && y === 7) {
-    array.push([x - 2, y + 1]);
-    array.push([x - 1, y + 2]);
+  if (row === 0 && col === 7) {
+    array.push([row - 2, col + 1]);
+    array.push([row - 1, col + 2]);
     return array;
   }
 
-  if (x === 7 && y === 0) {
-    array.push([x + 2, y - 1]);
-    array.push([x + 1, y - 2]);
+  if (row === 7 && col === 0) {
+    array.push([row + 2, col - 1]);
+    array.push([row + 1, col - 2]);
     return array;
   }
 
-  if (x === 7 && y === 7) {
-    array.push([x - 2, y - 1]);
-    array.push([x - 1, y - 2]);
+  if (row === 7 && col === 7) {
+    array.push([row - 2, col - 1]);
+    array.push([row - 1, col - 2]);
     return array;
   }
 
-  if (x === 1 && y === 0) {
-    array.push([x - 1, y + 2]);
-    array.push([x + 2, y + 1]);
-    array.push([x + 1, y + 2]);
+  if (row === 1 && col === 0) {
+    array.push([row - 1, col + 2]);
+    array.push([row + 2, col + 1]);
+    array.push([row + 1, col + 2]);
     return array;
   }
 
-  if (x === 6 && y === 0) {
-    array.push([x + 1, y + 2]);
-    array.push([x - 1, y + 2]);
-    array.push([x - 2, y + 1]);
+  if (row === 6 && col === 0) {
+    array.push([row + 1, col + 2]);
+    array.push([row - 1, col + 2]);
+    array.push([row - 2, col + 1]);
     return array;
   }
 
-  if (x === 7 && y === 1) {
-    array.push([x - 1, y + 2]);
-    array.push([x - 2, y + 1]);
-    array.push([x - 2, y - 1]);
+  if (row === 7 && col === 1) {
+    array.push([row - 1, col + 2]);
+    array.push([row - 2, col + 1]);
+    array.push([row - 2, col - 1]);
     return array;
   }
 
-  if (x === 7 && y === 6) {
-    array.push([x - 1, y - 2]);
-    array.push([x - 2, y - 1]);
-    array.push([x - 2, y + 1]);
+  if (row === 7 && col === 6) {
+    array.push([row - 1, col - 2]);
+    array.push([row - 2, col - 1]);
+    array.push([row - 2, col + 1]);
     return array;
   }
 
-  if (x === 1 && y === 0) {
-    array.push([x - 1, y + 2]);
-    array.push([x + 2, y + 1]);
-    array.push([x + 1, y + 2]);
+  if (row === 1 && col === 0) {
+    array.push([row - 1, col + 2]);
+    array.push([row + 2, col + 1]);
+    array.push([row + 1, col + 2]);
     return array;
   }
 
-  if (x === 6 && y === 0) {
-    array.push([x + 1, y + 2]);
-    array.push([x + 2, y - 1]);
-    array.push([x - 2, y + 1]);
+  if (row === 6 && col === 0) {
+    array.push([row + 1, col + 2]);
+    array.push([row + 2, col - 1]);
+    array.push([row - 2, col + 1]);
     return array;
   }
 
-  if (x === 1 && y === 7) {
-    array.push([x + 2, y - 1]);
-    array.push([x + 1, y - 2]);
-    array.push([x - 1, y - 2]);
+  if (row === 1 && col === 7) {
+    array.push([row + 2, col - 1]);
+    array.push([row + 1, col - 2]);
+    array.push([row - 1, col - 2]);
     return array;
   }
 
-  if (x === 6 && y === 7) {
-    array.push([x + 1, y - 2]);
-    array.push([x - 1, y - 2]);
-    array.push([x - 2, y - 1]);
+  if (row === 6 && col === 7) {
+    array.push([row + 1, col - 2]);
+    array.push([row - 1, col - 2]);
+    array.push([row - 2, col - 1]);
     return array;
   }
 
-  if (y > 1 && y < 6 && x === 0) {
+  if (col > 1 && col < 6 && row === 0) {
     return upperNeighbors();
   }
 
-  if (y > 1 && y < 6 && x === 7) {
+  if (col > 1 && col < 6 && row === 7) {
     return lowerNeighbors();
   }
 
-  if (x > 1 && x < 6 && y === 0) {
+  if (row > 1 && row < 6 && col === 0) {
     return leftVertexNeighbors();
   }
 
-  if (x > 1 && x < 6 && y === 7) {
+  if (row > 1 && row < 6 && col === 7) {
     return rightVertexNeighbors();
   }
 }
 
-function maxMoves([x, y], array) {
-  array.push([x - 2, y - 1]);
-  array.push([x - 1, y - 2]);
-  array.push([x + 1, y - 2]);
-  array.push([x + 2, y - 1]);
-  array.push([x + 2, y + 1]);
-  array.push([x + 1, y + 2]);
-  array.push([x - 1, y + 2]);
-  array.push([x - 1, y + 1]);
+function maxMoves([row, col], array) {
+  array.push([row - 2, col - 1]);
+  array.push([row - 1, col - 2]);
+  array.push([row + 1, col - 2]);
+  array.push([row + 2, col - 1]);
+  array.push([row + 2, col + 1]);
+  array.push([row + 1, col + 2]);
+  array.push([row - 1, col + 2]);
+  array.push([row - 1, col + 1]);
   return array;
 }
+
+const neighbors = borderVertices([0, 7], []);
+console.log(neighbors);
