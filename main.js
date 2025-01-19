@@ -111,6 +111,38 @@ function Node(data, left = null, right = null) {
   };
 }
 
+function merge(left, right, array = []) {
+  const length = left.length + right.length;
+  for (let i = 0; i < length; i += 1) {
+    if (left[0] < right[0] || left[0] === right[0]) {
+      array[i] = left.shift();
+    } else if (right[0] < left[0]) {
+      array[i] = right.shift();
+    }
+    if (left.length === 0) {
+      array.push(...right);
+      break;
+    }
+    if (right.length === 0) {
+      array.push(...left);
+      break;
+    }
+  }
+  return array;
+}
+// Sort the array first
+function mergeSort(array) {
+  if (array.length === 1) {
+    return array;
+  }
+  const mid = Math.floor(array.length / 2);
+  const leftHalf = array.slice(0, mid);
+  const rightHalf = array.slice(mid, array.length);
+  const sortedLeft = mergeSort(leftHalf);
+  const sortedRight = mergeSort(rightHalf);
+  return merge(sortedLeft, sortedRight);
+}
+
 function buildTree(array, start, end) {
   if (start > end) return null;
   const mid = start + Math.floor((end - start) / 2);
