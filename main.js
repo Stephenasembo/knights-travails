@@ -88,5 +88,18 @@ function getCoordinates(index) {
   return [row, col];
 }
 
+function getIndex(array) {
+  const [row, col] = array;
+  if (row > 7 || row < 0 || col < 0 || col > 7) {
+    throw new Error('Trying to access area out of bounds');
+  }
+  return row * 8 + col;
+}
+
+function findPath(start, end) {
+
+}
+
+console.log(getIndex([3, 7]));
+
 const list = createAdjacencyList();
-console.log(getCoordinates(-1));
