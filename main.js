@@ -79,6 +79,8 @@ function createAdjacencyList() {
   return adjacencyList;
 }
 
+const adjacencyList = createAdjacencyList();
+
 function getCoordinates(index) {
   if (index < 0 || index > 63) {
     throw new Error('Trying to access area out of board');
@@ -97,9 +99,50 @@ function getIndex(array) {
 }
 
 function findPath(start, end) {
-
+  const startIndex = getIndex(start);
+  const endIndex = getIndex(end);
 }
 
-console.log(getIndex([3, 7]));
+function Node(data, left = null, right = null) {
+  return {
+    data,
+    left,
+    right,
+  };
+}
 
-const list = createAdjacencyList();
+function buildTree(array, start, end) {
+  if (start > end) return null;
+  const mid = start + Math.floor((end - start) / 2);
+  const root = Node(array[mid]);
+  root.left = buildTree(array, start, mid - 1);
+  root.right = buildTree(array, mid + 1, end);
+  return root;
+}
+// Create a binary search tree
+class Tree {
+  constructor(array) {
+    this.array = [];
+    this.queue = [];
+    this.root = buildTree(array, 0, array.length - 1);
+  }
+}
+
+// Prints the tree in the console
+const prettyPrint = (node, prefix = '', isLeft = true) => {
+  if (node === null) {
+    return;
+  }
+  if (node.right !== null) {
+    prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
+  }
+  console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
+  if (node.left !== null) {
+    prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
+  }
+};
+
+const testArr = [2, 3, 4, 5];
+
+const testTree = new Tree(testArr);
+prettyPrint(testTree.root);
