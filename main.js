@@ -80,10 +80,13 @@ function createAdjacencyList() {
 }
 
 function getCoordinates(index) {
+  if (index < 0 || index > 63) {
+    throw new Error('Trying to access area out of board');
+  }
   const row = Math.floor(index / 8);
   const col = index % 8;
   return [row, col];
 }
 
 const list = createAdjacencyList();
-console.log(getCoordinates(60));
+console.log(getCoordinates(-1));
