@@ -120,8 +120,10 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 
 class ShortestPathBFS {
   static bfs(graph, source, parent, distance) {
+    const dist = distance;
+    const par = parent;
     const queue = [];
-    distance[source] = 0;
+    dist[source] = 0;
     queue.push(source);
     while (queue.length > 0) {
       const node = queue.shift();
@@ -129,8 +131,8 @@ class ShortestPathBFS {
       for (let i = 0; i < neighborsArr.length; i += 1) {
         const neighborIndex = getIndex(neighborsArr[i]);
         if (distance[neighborIndex] === 'Infinity') {
-          parent[neighborIndex] = node;
-          distance[neighborIndex] = distance[node] + 1;
+          par[neighborIndex] = node;
+          dist[neighborIndex] = distance[node] + 1;
           queue.push(neighborIndex);
         }
       }
@@ -178,4 +180,4 @@ class ShortestPathBFS {
   }
 }
 
-ShortestPathBFS.main([3, 3], [4, 3]);
+ShortestPathBFS.main([3, 3], [0, 0]);
