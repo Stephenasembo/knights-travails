@@ -27,7 +27,7 @@ function removeInvalid(coordinates, array) {
 }
 
 // Gets all possible paths of a knight at a particular square
-function knightMoves([row, col]) {
+function possibleMoves([row, col]) {
   let array = [];
   array.push([row - 2, col - 1]);
   let newCoordinates = array[array.length - 1];
@@ -71,7 +71,7 @@ function createAdjacencyList() {
   for (let row = 0; row < 8; row += 1) {
     for (let col = 0; col < 8; col += 1) {
       const vertexNeighbors = [];
-      const neighbors = knightMoves([row, col]);
+      const neighbors = possibleMoves([row, col]);
       vertexNeighbors.push(neighbors);
       adjacencyList.push(vertexNeighbors);
     }
@@ -104,20 +104,7 @@ function Node(data, left = null, right = null) {
   };
 }
 
-// Prints the tree in the console
-const prettyPrint = (node, prefix = '', isLeft = true) => {
-  if (node === null) {
-    return;
-  }
-  if (node.right !== null) {
-    prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
-  }
-  console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
-  if (node.left !== null) {
-    prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
-  }
-};
-
+// Looks for the shortest path
 class ShortestPathBFS {
   static bfs(graph, source, parent, distance) {
     const dist = distance;
@@ -164,6 +151,8 @@ class ShortestPathBFS {
       pathReverse[i] = getCoordinates(pathReverse[i]);
       pathReverse[i] = `(${pathReverse[i]})`;
     }
+    const moves = pathReverse.length - 1;
+    console.log(`You made it in ${moves} moves! Here's your path: `);
     const pathString = pathReverse.join(' -> ');
     console.log(pathString);
     return pathString;
@@ -180,4 +169,8 @@ class ShortestPathBFS {
   }
 }
 
-ShortestPathBFS.main([3, 3], [0, 0]);
+function knightMoves(start, end) {
+  ShortestPathBFS.main(start, end);
+}
+
+knightMoves([3, 3], [4, 3]);
