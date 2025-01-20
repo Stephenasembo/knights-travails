@@ -1,22 +1,3 @@
-function createBoard() {
-  const array = [];
-  // Our board is 8 * 8
-  const size = 8;
-  for (let i = 0; i < size; i += 1) {
-    for (let j = 0; j < size; j += 1) {
-      const col = [i, j];
-      array.push(col);
-    }
-  }
-  return array;
-}
-
-function invalidAccess([row, col]) {
-  if (row < 0 || row > 7 || col < 0 || col > 7) {
-    throw new Error('Trying to access area out of board');
-  }
-}
-
 // Rejects access outside the board
 function removeInvalid(coordinates, array) {
   const [row, col] = coordinates;
@@ -96,14 +77,6 @@ function getIndex(array) {
   return row * 8 + col;
 }
 
-function Node(data, left = null, right = null) {
-  return {
-    data,
-    left,
-    right,
-  };
-}
-
 // Looks for the shortest path
 class ShortestPathBFS {
   static bfs(graph, source, parent, distance) {
@@ -173,4 +146,4 @@ function knightMoves(start, end) {
   ShortestPathBFS.main(start, end);
 }
 
-knightMoves([3, 3], [4, 3]);
+knightMoves([8, 3], [4, 3]);
