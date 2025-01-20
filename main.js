@@ -79,8 +79,6 @@ function createAdjacencyList() {
   return adjacencyList;
 }
 
-const adjacencyList = createAdjacencyList();
-
 function getCoordinates(index) {
   if (index < 0 || index > 63) {
     throw new Error('Trying to access area out of board');
@@ -98,66 +96,12 @@ function getIndex(array) {
   return row * 8 + col;
 }
 
-function findPath(start, end) {
-  const startIndex = getIndex(start);
-  const endIndex = getIndex(end);
-}
-
 function Node(data, left = null, right = null) {
   return {
     data,
     left,
     right,
   };
-}
-
-function merge(left, right, array = []) {
-  const length = left.length + right.length;
-  for (let i = 0; i < length; i += 1) {
-    if (left[0] < right[0] || left[0] === right[0]) {
-      array[i] = left.shift();
-    } else if (right[0] < left[0]) {
-      array[i] = right.shift();
-    }
-    if (left.length === 0) {
-      array.push(...right);
-      break;
-    }
-    if (right.length === 0) {
-      array.push(...left);
-      break;
-    }
-  }
-  return array;
-}
-// Sort the array first
-function mergeSort(array) {
-  if (array.length === 1) {
-    return array;
-  }
-  const mid = Math.floor(array.length / 2);
-  const leftHalf = array.slice(0, mid);
-  const rightHalf = array.slice(mid, array.length);
-  const sortedLeft = mergeSort(leftHalf);
-  const sortedRight = mergeSort(rightHalf);
-  return merge(sortedLeft, sortedRight);
-}
-
-function buildTree(array, start, end) {
-  if (start > end) return null;
-  const mid = start + Math.floor((end - start) / 2);
-  const root = Node(array[mid]);
-  root.left = buildTree(array, start, mid - 1);
-  root.right = buildTree(array, mid + 1, end);
-  return root;
-}
-// Create a binary search tree
-class Tree {
-  constructor(array) {
-    this.array = [];
-    this.queue = [];
-    this.root = buildTree(array, 0, array.length - 1);
-  }
 }
 
 // Prints the tree in the console
@@ -174,7 +118,63 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
   }
 };
 
-const testArr = [2, 3, 4, 5];
+class ShortestPathBFS {
+  static bfs(graph, source, parent, distance) {
+    const queue = [];
+    distance[source] = 0;
+    queue.push(source);
+    while (queue.length > 0) {
+      const node = queue.shift();
+      const neighborsArr = graph[node][0];
+      for (let i = 0; i < neighborsArr.length; i += 1) {
+        const neighborIndex = getIndex(neighborsArr[i]);
+        if (distance[neighborIndex] === 'Infinity') {
+          parent[neighborIndex] = node;
+          distance[neighborIndex] = distance[node] + 1;
+          queue.push(neighborIndex);
+        }
+      }
+    }
+  }
 
-const testTree = new Tree(testArr);
-prettyPrint(testTree.root);
+  static printShortestDistance(graph, source, destination, vertex) {
+    // Contain parent of vertex
+    const parent = Array(vertex).fill(-1);
+
+    // Contains distance of vertex from source
+    const distance = Array(vertex).fill('Infinity');
+
+    ShortestPathBFS.bfs(graph, source, parent, distance);
+    if (distance[destination] === 'Infinity') {
+      return null;
+    }
+
+    const path = [];
+    let currentNode = destination;
+    path.push(destination);
+    while (parent[currentNode] !== -1) {
+      path.push(parent[currentNode]);
+      currentNode = parent[currentNode];
+    }
+
+    const pathReverse = path.reverse();
+    for (let i = 0; i < pathReverse.length; i += 1) {
+      pathReverse[i] = getCoordinates(pathReverse[i]);
+    }
+    const pathString = pathReverse.join(' -> ');
+    console.log(pathString);
+    return pathString;
+  }
+
+  static main() {
+    const vertex = 64;
+    const source = 0;
+    const destination = 63;
+
+    const graph = createAdjacencyList();
+
+    ShortestPathBFS.printShortestDistance(graph, source, destination, vertex);
+  }
+}
+
+ShortestPathBFS.main();
