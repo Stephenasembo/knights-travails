@@ -160,16 +160,17 @@ class ShortestPathBFS {
     const pathReverse = path.reverse();
     for (let i = 0; i < pathReverse.length; i += 1) {
       pathReverse[i] = getCoordinates(pathReverse[i]);
+      pathReverse[i] = `(${pathReverse[i]})`;
     }
     const pathString = pathReverse.join(' -> ');
     console.log(pathString);
     return pathString;
   }
 
-  static main() {
+  static main(start, end) {
     const vertex = 64;
-    const source = 0;
-    const destination = 63;
+    const source = getIndex(start);
+    const destination = getIndex(end);
 
     const graph = createAdjacencyList();
 
@@ -177,4 +178,4 @@ class ShortestPathBFS {
   }
 }
 
-ShortestPathBFS.main();
+ShortestPathBFS.main([3, 3], [4, 3]);
